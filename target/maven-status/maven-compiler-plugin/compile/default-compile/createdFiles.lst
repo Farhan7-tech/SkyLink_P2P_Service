@@ -1,0 +1,12 @@
+P2P\Utils\MultiParser.class
+P2P\handler\CORSHandler.class
+P2P\Utils\MultiParser$ParseResult.class
+P2P\Service\FileSharer$FileSenderHandler.class
+P2P\Controller\FileController.class
+P2P\handler\UploadHandler.class
+P2P\handler\UploadHandler$UploadInfo.class
+P2P\Service\FileSharer$FileInfo.class
+P2P\handler\DownloadHandler.class
+P2P\App.class
+P2P\Service\FileSharer.class
+P2P\Utils\UploadUtils.class
