@@ -13,6 +13,10 @@ sudo apt install -y openjdk-17-jdk maven
 sudo apt install -y nginx
 sudo npm install -g pm2
 
+git clone https://github.com/Farhan7-tech/SkyLink_P2P_Service
+cd SkyLink_P2P_Service
+
+
 # Build backend
 echo "Building Java backend..."
 mvn clean package
@@ -24,11 +28,11 @@ sudo rm -f /etc/nginx/sites-enabled/default
 
 cat <<EOF | sudo tee /etc/nginx/sites-available/skylink
 server {
-    listen 81;
+    listen 80;
     server_name _;
 
-    location /api/ {
-        proxy_pass http://localhost:8081/;
+    location / {
+        proxy_pass http://localhost:8081;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
