@@ -9,24 +9,30 @@ public class App
     public static void main( String[] args )
     {
         try {
-            // Start the API server on port 8080
-            FileController fileController = new FileController(8081);
+            // Get port dynamically (Render provides PORT env var)
+            int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8081"));
+
+            // Start the API server
+            FileController fileController = new FileController(port);
             fileController.start();
 
-            System.out.println("SkyLink server started on port 8081");
-            System.out.println("UI available at http://localhost:3000");
+            System.out.println("SkyLink server started on port " + port);
 
+            // Handle shutdown properly
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 System.out.println("Shutting down server...");
                 fileController.stop();
             }));
 
-            System.out.println("Press Enter to stop the server");
-            System.in.read();
+            // Keep the server running indefinitely
+            Thread.currentThread().join();
 
         } catch (IOException e) {
             System.err.println("Error starting server: " + e.getMessage());
-            e.printStackTrace();
+            System.exit(1);
+        } catch (InterruptedException e) {
+            System.err.println("Server interrupted: " + e.getMessage());
+            System.exit(1);
         }
 
     }
