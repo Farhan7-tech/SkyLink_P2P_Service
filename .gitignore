@@ -1,0 +1,7 @@
+.idea/
+Dockerfile
+docker-compose.yml
+nginx.conf.example
+start.bat
+start.sh
+vps-setup.sh
