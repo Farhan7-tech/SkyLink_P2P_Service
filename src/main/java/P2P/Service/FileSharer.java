@@ -38,7 +38,7 @@ public class FileSharer {
     public int offerFile(String filePath, String uploaderHost) {
         int port;
         while (true) {
-            port = UploadUtils.generatePort();
+            port = UploadUtils.generatePort();   // call this method , until we get the free port
             if (!availableFiles.containsKey(port)) {
                 availableFiles.put(port, new FileInfo(filePath, uploaderHost));
                 String token = generateAccessToken();
@@ -72,7 +72,7 @@ public class FileSharer {
         return null;
     }
 
-    // ✅ Added: Get file host (needed in DownloadHandler)
+    // Get file host (needed in DownloadHandler)
     public String getHostByPort(int port) {
         FileInfo info = availableFiles.get(port);
         return (info != null) ? info.host : null;
