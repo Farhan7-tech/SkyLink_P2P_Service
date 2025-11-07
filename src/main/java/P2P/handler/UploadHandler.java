@@ -170,7 +170,11 @@ public class UploadHandler implements HttpHandler {
             long len = Long.parseLong(contentLength);
             if (len > MAX_FILE_SIZE) {
                 // Reject immediately without reading
-                exchange.sendResponseHeaders(413, 0);
+                String response = "File too large: Maximum file size is " + (MAX_FILE_SIZE / (1024 * 1024)) + "MB";
+                exchange.sendResponseHeaders(413, response.getBytes().length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response.getBytes());
+                }
                 return;
             }
         }
@@ -194,7 +198,7 @@ public class UploadHandler implements HttpHandler {
             }
 
             // Check 2: Read request body with size limit (second line of defense)
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(); // array of bytes which can be acted as a stream, you can apply streams operation like reading.
             byte[] buffer = new byte[8192];
             int bytesRead;
             long totalBytesRead = 0;
@@ -237,12 +241,12 @@ public class UploadHandler implements HttpHandler {
 
             String filename = result.fileName;
             if (filename == null || filename.trim().isEmpty()) {
-                filename = "unnamed-file.txt";
+                filename = "deafult.txt";
             }
 
             // Check 4: Validate file extension (block executables and malicious files)
             if (!isAllowedExtension(filename)) {
-                String response = "File type not allowed. Allowed extensions: .txt, .pdf, .jpg, .jpeg, .png, .gif, .zip, .doc, .docx, .csv";
+                String response = "File type not allowed. Allowed extensions: .txt, .pdf, .jpg, .jpeg, .png, .gif, .zip, .doc, .docx, .csv Only";
                 exchange.sendResponseHeaders(415, response.getBytes().length); // 415 Unsupported Media Type
                 try (OutputStream os = exchange.getResponseBody()) {
                     os.write(response.getBytes());
@@ -272,7 +276,9 @@ public class UploadHandler implements HttpHandler {
             String token = fileSharer.getToken(port); // Get the access token
             new Thread(() -> fileSharer.startFileServer(port)).start();
 
-            // Return both port and token in JSON response
+            // Return both port and token in JSON response. because you must tell the frontend (or client) how to access that file.
+            //That’s what this jsonResponse block does — it sends information back to the client in a structured JSON format.
+            // because both port and token is required by the frontend to download the file.
             String jsonResponse = "{\"port\": " + port + ", \"token\": \"" + token + "\"}";
             headers.add("Content-Type", "application/json");
             exchange.sendResponseHeaders(200, jsonResponse.getBytes().length);
