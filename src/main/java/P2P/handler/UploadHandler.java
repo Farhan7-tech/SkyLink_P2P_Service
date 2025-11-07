@@ -18,26 +18,23 @@ import com.sun.net.httpserver.HttpHandler;
 public class UploadHandler implements HttpHandler {
     private final String uploadDir;
     private final FileSharer fileSharer;
-    // Maximum file size: 500MB
+    // Maximum file size: 500MB, that's the max users can upload
     private static final long MAX_FILE_SIZE = 500L * 1024 * 1024; // 500MB in bytes
 
-    private static final int MAX_UPLOADS_PER_MINUTE = 10; // Maximum uploads allowed per minute
+    private static final int MAX_UPLOADS_PER_MINUTE = 10; // Maximum uploads allowed per minute, user can only upload 10 files per minutes.
     private static final long ONE_MINUTE_MS = 60_000; // One minute in milliseconds
 
-    // Allowed file extensions and MIME types (security whitelist)
+    // Allowed file extensions
     private static final String[] ALLOWED_EXTENSIONS = {
             ".txt", ".pdf", ".jpg", ".jpeg", ".png", ".gif", ".zip", ".doc", ".docx", ".csv"
     };
+    //Allowed MIME (Multipurpose Internet Mail Extensions) types (security whitelist)
     private static final String[] ALLOWED_MIME_TYPES = {
             "text/plain", "application/pdf", "image/jpeg", "image/png", "image/gif",
             "application/zip", "application/x-zip-compressed", "application/x-zip", "application/octet-stream",
             "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             "text/csv"
     };
-
-    // This map keeps track of each IP's upload info
-    // Key: IP address, Value: UploadInfo object
-    private static final ConcurrentHashMap<String, UploadInfo> uploadTracker = new ConcurrentHashMap<>();
 
     // This class stores info about uploads for one IP
     private static class UploadInfo {
@@ -49,6 +46,11 @@ public class UploadHandler implements HttpHandler {
         }
     }
 
+    // This map keeps track of each IP's upload info
+    // Key: IP address, Value: UploadInfo object
+    private static final ConcurrentHashMap<String, UploadInfo> uploadTracker = new ConcurrentHashMap<>();
+
+   // initializing the uploadDir and fileSharer , whatever it passed from file controller.
     public UploadHandler(String uploadDir, FileSharer fileSharer) {
         this.uploadDir = uploadDir;
         this.fileSharer = fileSharer;
@@ -58,8 +60,8 @@ public class UploadHandler implements HttpHandler {
     private boolean isAllowedExtension(String filename) {
         if (filename == null) return false;
         String lower = filename.toLowerCase();
-        for (String ext : ALLOWED_EXTENSIONS) {
-            if (lower.endsWith(ext)) {
+        for (String extention : ALLOWED_EXTENSIONS) {
+            if (lower.endsWith(extention)) {
                 return true;
             }
         }
@@ -70,7 +72,7 @@ public class UploadHandler implements HttpHandler {
     private boolean isAllowedMimeType(String mimeType) {
         if (mimeType == null) return false;
         for (String allowed : ALLOWED_MIME_TYPES) {
-            if (mimeType.toLowerCase().contains(allowed.toLowerCase())) {
+            if (mimeType.toLowerCase().startsWith(allowed.toLowerCase())) {
                 return true;
             }
         }
@@ -85,17 +87,31 @@ public class UploadHandler implements HttpHandler {
         headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization");
 
         // Handle CORS preflight for this route
-        if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-            exchange.sendResponseHeaders(204, -1);
+        /* Without this, the browser would block your frontend’s request because it didn’t get permission from the backend.
+           So, this snippet is essential for enabling CORS in your file-sharing app.
+           Browsers send a preflight OPTIONS request when the main request is considered “non-simple. like here because we are
+           sharing something”*/
+        if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) { /* This line checks what type of request it is.
+          It means: “Is this an HTTP OPTIONS request?” The browser automatically sends an OPTIONS request before certain types of
+          requests (like a POST with a file upload). This pre-check request is called a CORS Preflight Request.
+          This request does not contain any actual data, just a permission check.*/
+            exchange.sendResponseHeaders(204, -1); /* It means: “Request handled successfully, but no response body.”
+            This tells the server not to send any body with the response
+            Stops further code execution — because we only wanted to answer the preflight check.*/
             return;
         }
 
+        /*because we are dealing with upload , which should be a post request, so we are checking for POST method,
+          if the request we received at /upload with GET method , we are not allowed that request to pass through*/
         if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
             String response = "Method Not Allowed";
+            // first setting up the response headers
             exchange.sendResponseHeaders(405, response.getBytes().length);
+            //then setting up the response body.
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(response.getBytes());
             }
+
             return;
         }
 
@@ -118,8 +134,8 @@ public class UploadHandler implements HttpHandler {
             // Still in the same minute, increase the count
             info.uploadCount++;
             if (info.uploadCount > MAX_UPLOADS_PER_MINUTE) {
-                // Too many uploads! Block this request
-                String response = "Rate limit exceeded: Max " + MAX_UPLOADS_PER_MINUTE + " uploads per minute.";
+                // Too many uploads! Block this request , Rate limiting happens here
+                String response = "Rate limit exceeded: Max " + MAX_UPLOADS_PER_MINUTE + " uploads per minute you can do.";
                 exchange.sendResponseHeaders(429, response.getBytes().length); // 429 Too Many Requests
                 try (OutputStream os = exchange.getResponseBody()) {
                     os.write(response.getBytes());
@@ -128,8 +144,8 @@ public class UploadHandler implements HttpHandler {
             }
         }
 
+        // fetching out the value of content type from request body
         Headers requestHeaders = exchange.getRequestHeaders();
-        // ...existing code...
         String contentType = null;
         for (String key : requestHeaders.keySet()) {
             if (key != null && key.equalsIgnoreCase("Content-Type")) {
@@ -137,6 +153,8 @@ public class UploadHandler implements HttpHandler {
                 break;
             }
         }
+
+        //validating the value of content type , it should be multipart/form-data
         if (contentType == null || !contentType.startsWith("multipart/form-data")) {
             String response = "Bad Request: Content-Type must be multipart/form-data";
             exchange.sendResponseHeaders(400, response.getBytes().length);
@@ -146,7 +164,19 @@ public class UploadHandler implements HttpHandler {
             return;
         }
 
+        // first line of defense , if Content-Length header is available , we read that length , if grater than max , we reject
+        String contentLength = exchange.getRequestHeaders().getFirst("Content-Length");
+        if (contentLength != null) {
+            long len = Long.parseLong(contentLength);
+            if (len > MAX_FILE_SIZE) {
+                // Reject immediately without reading
+                exchange.sendResponseHeaders(413, 0);
+                return;
+            }
+        }
+
         try {
+            // Boundary extraction from Content-Type
             int bIdx = contentType.toLowerCase().indexOf("boundary=");
             if (bIdx == -1) {
                 String response = "Bad Request: boundary missing in Content-Type";
