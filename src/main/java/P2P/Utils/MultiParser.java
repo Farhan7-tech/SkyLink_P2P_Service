@@ -9,6 +9,42 @@ public class MultiParser {
         this.boundary = boundary;
     }
 
+    public static class ParseResult {
+        public final String fileName;
+        public final byte[] fileContent;
+        public final String contentType;
+
+        public ParseResult(String fileName, byte[] fileContent, String contentType) {
+            this.fileName = fileName;
+            this.fileContent = fileContent;
+            this.contentType = contentType;
+        }
+    }
+
+    private static int findSequence(byte[] data, byte[] sequence, int startPosition) {
+        // Loop through 'data' starting from startPosition
+        for (int i = startPosition; i <= data.length - sequence.length; i++) {
+
+            boolean match = true; // Assume it's a match
+
+            // Check if sequence matches starting from position i
+            for (int j = 0; j < sequence.length; j++) {
+                if (data[i + j] != sequence[j]) {
+                    match = false; // Found a mismatch
+                    break;         // Stop checking further for this i
+                }
+            }
+
+            // If all bytes matched, return the index where it starts
+            if (match) {
+                return i;
+            }
+        }
+
+        // If sequence not found anywhere, return -1
+        return -1;
+    }
+
     public ParseResult parse() {
         try {
             String dataAsString = new String(data);
@@ -58,31 +94,6 @@ public class MultiParser {
             System.err.println("Error parsing multipart data " + ex.getMessage());
             return null;
         }
-    }
-
-    public static class ParseResult {
-        public final String fileName;
-        public final byte[] fileContent;
-        public final String contentType;
-
-        public ParseResult(String fileName, byte[] fileContent, String contentType) {
-            this.fileName = fileName;
-            this.fileContent = fileContent;
-            this.contentType = contentType;
-        }
-    }
-
-    private static int findSequence(byte[] data, byte[] sequence, int startPosition) {
-        outer:
-        for (int i = startPosition; i < data.length - sequence.length; i++) {
-            for (int j = 0; j < sequence.length; j++) {
-                if (data[i + j] != sequence[j]) {
-                    continue outer;
-                }
-            }
-            return i;
-        }
-        return -1;
     }
 }
 
