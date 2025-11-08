@@ -82,13 +82,13 @@ public class UploadHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         Headers headers = exchange.getResponseHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
-        headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-        headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+        headers.add("Access-Control-Allow-Origin", "*"); //This allows any website (any origin) to make requests to your server.
+        headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS"); //This tells browsers which HTTP methods are allowed for cross-origin requests
+        headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization"); // This tells browsers which custom headers the frontend is allowed to send in the actual request.
 
         // Handle CORS preflight for this route
         /* Without this, the browser would block your frontend’s request because it didn’t get permission from the backend.
-           So, this snippet is essential for enabling CORS in your file-sharing app.
+           So, this snippet is essential for enabling CORS in my file-sharing app.
            Browsers send a preflight OPTIONS request when the main request is considered “non-simple. like here because we are
            sharing something”*/
         if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) { /* This line checks what type of request it is.
@@ -96,7 +96,7 @@ public class UploadHandler implements HttpHandler {
           requests (like a POST with a file upload). This pre-check request is called a CORS Preflight Request.
           This request does not contain any actual data, just a permission check.*/
             exchange.sendResponseHeaders(204, -1); /* It means: “Request handled successfully, but no response body.”
-            This tells the server not to send any body with the response
+            This tells the server not to send any kind of body with the response.
             Stops further code execution — because we only wanted to answer the preflight check.*/
             return;
         }

@@ -32,11 +32,13 @@ public class DownloadHandler implements HttpHandler {
         headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization");
         headers.add("Access-Control-Expose-Headers", "Content-Disposition");
 
+        // Handle CORS preflight for this route
         if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             exchange.sendResponseHeaders(204, -1);
             return;
         }
 
+        //checking for method allowance
         if (!exchange.getRequestMethod().equalsIgnoreCase("GET")) {
             String response = "Method Not Allowed";
             exchange.sendResponseHeaders(405, response.getBytes().length);
