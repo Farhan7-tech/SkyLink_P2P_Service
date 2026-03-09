@@ -5,3 +5,5 @@ nginx.conf.example
 start.bat
 start.sh
 vps-setup.sh
+target
+.gitignore
