@@ -73,9 +73,10 @@ public class DownloadHandler implements HttpHandler {
                 }
                 return;
             }
-            String host = fileSharer.getHostByPort(port);
-            if (host == null) host = "localhost";
-            try (Socket socket = new Socket(host, port)) {
+            // The per-file socket server always runs inside this same JVM (started by
+            // UploadHandler on this host), so it must be reached via loopback rather than
+            // the uploader's client IP, which is unreachable from here in a real deployment.
+            try (Socket socket = new Socket("localhost", port)) {
                 InputStream socketInput = socket.getInputStream();
                 File tempFile = File.createTempFile("download-", ".tmp");
                 tempFile.deleteOnExit(); // Extra safety: delete if JVM exits
