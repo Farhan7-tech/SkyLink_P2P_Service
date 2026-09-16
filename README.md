@@ -1,16 +1,4 @@
-<div align="center">
-
-# ⚡ SkyLink P2P Service
-
-**A lightweight file-transfer server in plain Java: upload a file, get a 6-digit code, share it, and the file is downloaded once and then deleted.**
-
-[![Java](https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=openjdk)](https://openjdk.org/)
-[![Maven](https://img.shields.io/badge/Build-Maven-C71A36?style=flat-square&logo=apachemaven)](https://maven.apache.org/)
-[![No framework](https://img.shields.io/badge/Framework-none-lightgrey?style=flat-square)](#)
-
-</div>
-
----
+<a href="https://github.com/Farhan7-tech/SkyLink_P2P_Service"><img src=".github/assets/banner.svg" width="100%" alt="SkyLink P2P: upload once, download once, gone."></a>
 
 ## About
 
@@ -144,8 +132,6 @@ src/main/java/P2P/
 
 - **[SkyLink File Share Application](https://github.com/Farhan7-tech/SkyLink_File_Share_Application):** the main app (Spring Boot + React) that this service powers.
 
----
+<br>
 
-<div align="center">
-Built by <a href="https://github.com/Farhan7-tech">Mohd Farhan</a>
-</div>
+<a href="https://github.com/Farhan7-tech"><img src=".github/assets/footer.svg" width="100%" alt="Built by Mohd Farhan. More projects on GitHub."></a>
