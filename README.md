@@ -67,7 +67,7 @@ curl -F "file=@report.pdf" http://localhost:8081/upload
 
 ### `GET /download?token=<token>`
 
-Downloads the file linked to the token. The original filename comes back in the `Content-Disposition` header.
+Downloads the file linked to the token. The stored UUID-prefixed filename comes back in the `Content-Disposition` header.
 
 ```bash
 curl -OJ "http://localhost:8081/download?token=482915"
@@ -125,10 +125,21 @@ src/main/java/P2P/
 ## Things to know
 
 - A file's socket server waits **50 seconds** for a connection. If nobody downloads in that window, the file can no longer be downloaded.
+- The listener timeout does not currently clear its maps or delete the original file; a later request with that stale PIN can return `500`.
 - Tokens and file info are kept in memory, so restarting the server clears every pending share.
 - Uploads are buffered in memory before they're written to disk, so plan server memory around the 500 MB limit.
 
-## Related
+## Learn and Prepare for Interviews
+
+- **[Animated beginner lesson](docs/learning/index.html):** follow the bytes, pause each step, explore six transfer scenarios, track a two-day study plan and practice flashcards. Open the downloaded HTML locally; GitHub's file view shows its source.
+- **[Complete P2P guide and two-day plan](INTERVIEW_PREP.md):** every production/test module, the React integration, actual behavior, limitations and revision exercises.
+- **[80 questions with model answers](docs/QUESTION_BANK.md):** 20 beginner, 30 intermediate and 30 advanced.
+- **[Run a local transfer](docs/HOW_TO_RUN.md):** build, upload, verify binary integrity, retry a PIN and troubleshoot.
+- **[Verification record](docs/VERIFICATION.md):** local build, transfer and browser checks with their limits.
+
+The learning material distinguishes the implemented server-relayed transfer from proposed direct browser P2P and end-to-end encryption. Successful-path cleanup is implemented; timeout/failure cleanup is incomplete.
+
+## Related Projects
 
 - **[SkyLink File Share Application](https://github.com/Farhan7-tech/SkyLink_File_Share_Application):** the main app (Spring Boot + React) that this service powers.
 

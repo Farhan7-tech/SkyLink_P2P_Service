@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkyLink P2P | Learn the Transfer</title>
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#lesson"><span class="brand-mark" aria-hidden="true">SL</span><span>SkyLink <span class="brand-sub">/ P2P study room</span></span></a>
+    <span class="edition">CODE STUDY <span>08 OCT 2026</span></span>
+  </header>
+  <main>
+    <div class="page-heading"><div><p class="eyebrow">YOUR FILE, ONE HOP AT A TIME</p><h1>Understand the transfer.</h1><p class="lede">Follow a file through the real Java service. Then explain it in your own words.</p></div><div class="scope-note"><span class="status-dot"></span>Based on the merged repository<br><span>Server-relayed temporary sharing</span></div></div>
+    <nav class="tabs" aria-label="Study views" role="tablist">
+      <button id="tab-lesson" role="tab" aria-selected="true" aria-controls="lesson" data-tab="lesson">Motion lesson</button>
+      <button id="tab-plan" role="tab" aria-selected="false" aria-controls="plan" data-tab="plan">Two-day plan</button>
+      <button id="tab-drill" role="tab" aria-selected="false" aria-controls="drill" data-tab="drill">Interview drill <span>80</span></button>
+    </nav>
+    <section id="lesson" role="tabpanel" aria-labelledby="tab-lesson">
+      <div class="lesson-toolbar"><label>Transfer scenario <select id="scenario"><option value="success">Successful transfer</option><option value="invalid">Wrong PIN</option><option value="timeout">No download for 50 seconds</option><option value="retry">Download the same PIN again</option><option value="startup">Download before listener is ready</option><option value="race">Two uploads choose the same port</option></select></label><span class="simulation-label">Illustrative values / teaching time</span></div>
+      <div class="lesson-layout">
+        <aside class="chapter-list" aria-label="Transfer steps"><p class="eyebrow">THE JOURNEY</p><ol id="chapters"></ol></aside>
+        <div class="visual-column">
+          <div class="scene-heading"><span id="step-number" class="step-count">01 / 12</span><h2 id="scene-title">Choose a file</h2><span id="outcome" class="outcome">Browser</span></div>
+          <div class="network" id="network" role="img" aria-label="Two browsers connected through the Java server, with local disk, maps and a TCP listener">
+            <svg id="wires" aria-hidden="true"><path id="route"/><circle id="packet" r="6"/></svg>
+            <div id="uploader" class="peer node"><span class="node-kind">UPLOADER BROWSER</span><strong>Your device</strong><span class="file-chip">notes.txt</span><small id="uploader-detail">File selected</small></div>
+            <div class="server-boundary"><div class="host-heading"><span>JAVA SERVER</span><span>API :8081</span></div><div class="server-grid">
+              <div id="upload" class="module node"><span class="node-kind">HTTP IN</span><strong>UploadHandler</strong><small>Validate + parse</small></div>
+              <div id="disk" class="module node"><span class="node-kind">TEMP DISK</span><strong>Uploaded file</strong><small id="disk-detail">Not stored yet</small></div>
+              <div id="maps" class="module node"><span class="node-kind">MEMORY</span><strong>Port / PIN maps</strong><small id="map-detail">No share registered</small></div>
+              <div id="listener" class="module node"><span class="node-kind">LOCAL TCP</span><strong>FileSharer</strong><small id="socket-detail">Listener not started</small></div>
+              <div id="download" class="module node"><span class="node-kind">HTTP OUT</span><strong>DownloadHandler</strong><small>PIN lookup + localhost</small></div>
+              <div id="staging" class="module node"><span class="node-kind">TEMP DISK</span><strong>Download staging</strong><small id="staging-detail">No staging file</small></div>
+            </div><div class="host-footer" id="server-status">Bytes travel through this host.</div></div>
+            <div id="recipient" class="peer node"><span class="node-kind">RECIPIENT BROWSER</span><strong>The other device</strong><span class="file-chip" id="recipient-chip">Waiting for PIN</span><small id="recipient-detail">HTTP client</small></div>
+          </div>
+          <div class="player"><div class="player-buttons"><button id="previous" aria-label="Previous step" title="Previous step">Previous</button><button id="play" class="primary" aria-label="Play lesson">Play</button><button id="next" aria-label="Next step" title="Next step">Next</button></div><label class="scrubber"><span>Step <output id="step-output">1</output></span><input id="scrub" type="range" min="0" max="11" value="0" aria-label="Lesson step"></label><label class="pace">Pace<select id="pace"><option value="9000">Slow</option><option value="6500" selected>Normal</option><option value="3500">Fast</option></select></label></div>
+          <div class="teaching" aria-live="polite"><div class="teaching-copy"><p class="eyebrow">PLAIN ENGLISH</p><p id="plain"></p><details id="technical"><summary>What the code does</summary><p id="detail"></p><code id="source"></code></details></div><div class="recall"><p class="eyebrow">CHECK YOUR UNDERSTANDING</p><p id="recall-question"></p><details id="recall-answer"><summary>Reveal the answer</summary><p id="recall-solution"></p></details></div></div>
+        </div>
+      </div>
+      <details class="glossary"><summary>Beginner vocabulary</summary><dl><dt>HTTP</dt><dd>A browser request/response with a method, URL, headers and body.</dd><dt>TCP socket</dt><dd>A connection carrying an ordered stream of bytes. Used inside the Java host here.</dd><dt>Port</dt><dd>A network endpoint number. API port and file-listener port have different jobs.</dd><dt>localhost</dt><dd>The machine executing the code. Here, the server, not the uploader's browser.</dd><dt>Boundary</dt><dd>A separator in the multipart upload envelope.</dd><dt>PIN</dt><dd>A bearer secret used to find a pending share; not a user login.</dd><dt>Atomic</dt><dd>One indivisible state change. Separate safe map operations do not make an entire workflow atomic.</dd><dt>EOF</dt><dd>End of stream. It says the stream ended, not that the expected whole file arrived.</dd></dl></details>
+    </section>
+    <section id="plan" role="tabpanel" aria-labelledby="tab-plan" hidden>
+      <div class="plan-intro"><h2>Two days. A clear route.</h2><p>Six focused hours each day, plus breaks. Work aloud and draw the byte path from memory. Progress is stored only in this browser.</p><button id="clear-progress" title="Clear study completion marks">Clear progress</button></div>
+      <div class="days"><section class="day"><div class="day-heading"><span>DAY 01</span><h3>Understand the working system</h3></div><div id="day1"></div></section><section class="day"><div class="day-heading"><span>DAY 02</span><h3>Debug, defend, interview</h3></div><div id="day2"></div></section></div>
+      <div class="revision"><h3>Your two-minute explanation</h3><p>Product purpose. Two backends. Upload to server disk. PIN and per-file listener. Download through localhost to HTTP. Successful-path cleanup. One current weakness and a proposed fix. Your actual contribution.</p><p>Say “server-relayed temporary transfer.” Avoid unsupported claims about direct P2P, end-to-end encryption, guaranteed expiry cleanup or exactly-once delivery.</p></div>
+    </section>
+    <section id="drill" role="tabpanel" aria-labelledby="tab-drill" hidden>
+      <div class="drill-toolbar"><label>Question level<select id="question-level"><option value="All">All 80 questions</option><option value="Beginner">Beginner / 20</option><option value="Intermediate">Intermediate / 30</option><option value="Advanced">Advanced / 30</option><option value="Review">Marked for review</option></select></label><label class="answer-toggle"><input id="show-answers" type="checkbox"> Show model answers</label><span id="question-count"></span></div>
+      <article class="flashcard"><div class="question-meta"><span id="question-id"></span><span id="question-topic"></span></div><h2 id="question-text"></h2><details id="model-answer"><summary>Reveal model answer</summary><p id="answer-text"></p><p class="answer-source" id="answer-source"></p></details><div class="flashcard-footer"><label><input id="review-question" type="checkbox"> Mark for review</label><span>Speak first. Then compare the mechanism and trade-off.</span></div></article>
+      <div class="question-controls"><button id="question-prev">Previous question</button><button id="question-next" class="primary">Next question</button><button id="shuffle" title="Choose a random question">Random question</button></div>
+      <div class="mock"><h3>Practice rounds</h3><p><strong>25 minutes:</strong> Q1 pitch, Q21 upload, Q23 multipart, Q25 localhost, Q29 maps, Q38 tests, Q79 contribution.</p><p><strong>30 minutes:</strong> Q51 race, Q55 competing downloads, Q59 timeout, Q60 tokens, Q65 redesign, Q67 replicas, Q80 priorities.</p><p>Self-score: 0 cannot explain; 1 names terms; 2 explains mechanism; 3 adds a correct example and trade-off.</p></div>
+    </section>
+    <footer class="footer"><span>Current behavior and proposed fixes are labeled separately.</span><div><a href="../../INTERVIEW_PREP.md">Written guide</a><a href="../QUESTION_BANK.md">All questions</a><a href="../HOW_TO_RUN.md">Local exercise</a></div></footer>
+  </main>
+  <script src="questions.js"></script>
+  <script src="lesson.js"></script>
+</body>
+</html>
