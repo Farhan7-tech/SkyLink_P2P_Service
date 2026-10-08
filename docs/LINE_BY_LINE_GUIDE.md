@@ -73,8 +73,7 @@ Read in the order below. Do not attempt all 901 physical lines in one sitting. F
 - **<>:** Generic type parameters, or diamond inference for a constructor. Map keys/values use reference types.
 - **->:** Lambda arrow: arguments on the left, deferred task expression/body on the right.
 - **? ::** Conditional expression: condition ? resultIfTrue : resultIfFalse.
-- **escapes:** Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+- **escapes:** Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 ## Source Coverage
 
@@ -2708,8 +2707,7 @@ public class MultiParser {
 
 **Example / read it aloud:** The backslash in " is Java escaping: it puts a quote character inside the string.
 
-**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 <a id="multiparser-l52"></a>
 
@@ -2783,8 +2781,7 @@ public class MultiParser {
 
 **Why it is here:** That closing quote marks the end of the filename value.
 
-**Syntax on this line:** int: A primitive signed 32-bit integer, used here for ports, indexes and byte counts. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** int: A primitive signed 32-bit integer, used here for ports, indexes and byte counts. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 <a id="multiparser-l57"></a>
 
@@ -2918,11 +2915,9 @@ public class MultiParser {
 
 **Why it is here:** MIME extraction must stop at the header's line boundary.
 
-**Example / read it aloud:**  is carriage return; 
- is newline; the two together represent HTTP-style line endings.
+**Example / read it aloud:** \r is carriage return; \n is newline; the two together represent HTTP-style line endings.
 
-**Syntax on this line:** int: A primitive signed 32-bit integer, used here for ports, indexes and byte counts. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** int: A primitive signed 32-bit integer, used here for ports, indexes and byte counts. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 <a id="multiparser-l66"></a>
 
@@ -2950,8 +2945,7 @@ public class MultiParser {
 
 **Why it is here:** The result replaces the generic fallback only when the boundaries are usable.
 
-**Example / read it aloud:** Content-Type: text/plain
- -> text/plain.
+**Example / read it aloud:** Content-Type: text/plain\r\n -> text/plain.
 
 **Syntax on this line:** (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison.
 
@@ -3011,8 +3005,7 @@ public class MultiParser {
 
 **Why it is here:** In a multipart part, a blank line separates part headers from payload bytes.
 
-**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 <a id="multiparser-l72"></a>
 
@@ -3098,11 +3091,9 @@ public class MultiParser {
 
 **Why it is here:** The final multipart delimiter includes two additional trailing hyphens. Byte search preserves original payload bytes.
 
-**Example / read it aloud:** boundary=abc -> marker bytes for 
---abc--.
+**Example / read it aloud:** boundary=abc -> marker bytes for \r\n--abc--.
 
-**Syntax on this line:** byte: A signed 8-bit primitive. byte[] holds arbitrary file bytes; read() uses int so it can additionally return -1. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. []: An array type/index, such as byte[] or buffer[0]. Array indexes are zero-based. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** byte: A signed 8-bit primitive. byte[] holds arbitrary file bytes; read() uses int so it can additionally return -1. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. []: An array type/index, such as byte[] or buffer[0]. Array indexes are zero-based. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 **Actual behavior / caution:** getBytes uses default charset; protocol delimiters should use a deliberate compatible encoding.
 
@@ -3160,8 +3151,7 @@ public class MultiParser {
 
 **Example / read it aloud:** This fallback alone does not make the parser fully multipart-aware.
 
-**Syntax on this line:** (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 <a id="multiparser-l82"></a>
 
@@ -6281,8 +6271,7 @@ public class UploadHandler implements HttpHandler {
 
 **Why it is here:** HTTP parameters may quote their value; those outer quotes are envelope syntax, not delimiter bytes.
 
-**Syntax on this line:** if: Run the controlled statement/block only when its condition is true. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. {}: Braces group a class/method/control block or array initializer. They do not make concurrent operations atomic. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. && / ||: Logical AND/OR with short-circuit evaluation: the right side is evaluated only when needed. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** if: Run the controlled statement/block only when its condition is true. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. {}: Braces group a class/method/control block or array initializer. They do not make concurrent operations atomic. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. && / ||: Logical AND/OR with short-circuit evaluation: the right side is evaluated only when needed. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 <a id="uploadhandler-l197"></a>
 
@@ -7562,8 +7551,7 @@ public class UploadHandler implements HttpHandler {
 
 **Example / read it aloud:** With example values: {"port": 53817, "token": "482915"}. Backslashes escape quote characters in Java source.
 
-**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. {}: Braces group a class/method/control block or array initializer. They do not make concurrent operations atomic. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. {}: Braces group a class/method/control block or array initializer. They do not make concurrent operations atomic. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 **Actual behavior / caution:** The current browser only needs the PIN to download; its path port is dummy 0. The current frontend uses PIN-only lookup and dummy path port 0; it does not require the returned port.
 
@@ -10471,11 +10459,9 @@ public class FileSharer {
 
 **Why it is here:** A newline-terminated header frames metadata before raw payload in the simple TCP protocol.
 
-**Example / read it aloud:** Filename: UUID_notes.txt
-.
+**Example / read it aloud:** Filename: UUID_notes.txt\n.
 
-**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** String: An immutable text object. String comparisons use equals for contents, not == for object identity. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 **Actual behavior / caution:** There is no expected byte count/checksum/PIN in this header.
 
@@ -12149,8 +12135,7 @@ public class DownloadHandler implements HttpHandler {
 
 **Example / read it aloud:** break stops only this loop; execution continues at header decoding.
 
-**Syntax on this line:** if: Run the controlled statement/block only when its condition is true. break: Exit the nearest enclosing loop/switch. Execution continues after it; this is not a method return. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. == / !=: Equality/inequality. == null tests missing reference; String content should use equals. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** if: Run the controlled statement/block only when its condition is true. break: Exit the nearest enclosing loop/switch. Execution continues after it; this is not a method return. (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. == / !=: Equality/inequality. == null tests missing reference; String content should use equals. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 <a id="downloadhandler-l92"></a>
 
@@ -12488,8 +12473,7 @@ public class DownloadHandler implements HttpHandler {
 
 **Example / read it aloud:** The Java " sequences add literal quotes around UUID_notes.txt.
 
-**Syntax on this line:** (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, " is a quote, \ a backslash,  carriage return and 
- newline. These characters differ from their written escape notation.
+**Syntax on this line:** (): Parentheses declare parameters, pass call arguments, group expressions or contain loop/condition syntax. .: Access a member or invoke a method on a class/object, such as fileSharer.getToken(port). Chained calls pass the returned object to the next access. ;: End a Java statement/declaration; also separate for-loop clauses or try resource declarations. =: Assign the right-side value to the left variable. It is not equality comparison. +: Numeric addition for numbers; text concatenation when a String operand is involved. escapes: Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.
 
 **Actual behavior / caution:** A robust implementation must safely encode/validate untrusted names for headers; this line concatenates directly.
 

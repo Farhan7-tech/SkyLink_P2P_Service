@@ -2610,7 +2610,7 @@ window.SKYLINK_CODE = {
           "kind": "code",
           "what": "Find the carriage-return/newline ending this header line.",
           "why": "MIME extraction must stop at the header's line boundary.",
-          "example": "\r is carriage return; \n is newline; the two together represent HTTP-style line endings.",
+          "example": "\\r is carriage return; \\n is newline; the two together represent HTTP-style line endings.",
           "caution": "",
           "syntax": [
             "int",
@@ -2643,7 +2643,7 @@ window.SKYLINK_CODE = {
           "kind": "code",
           "what": "Extract the header value as the claimed MIME type.",
           "why": "The result replaces the generic fallback only when the boundaries are usable.",
-          "example": "Content-Type: text/plain\r\n -> text/plain.",
+          "example": "Content-Type: text/plain\\r\\n -> text/plain.",
           "caution": "",
           "syntax": [
             "()",
@@ -2784,7 +2784,7 @@ window.SKYLINK_CODE = {
           "kind": "code",
           "what": "Build the ending marker CRLF--boundary-- and encode it as bytes.",
           "why": "The final multipart delimiter includes two additional trailing hyphens. Byte search preserves original payload bytes.",
-          "example": "boundary=abc -> marker bytes for \r\n--abc--.",
+          "example": "boundary=abc -> marker bytes for \\r\\n--abc--.",
           "caution": "getBytes uses default charset; protocol delimiters should use a deliberate compatible encoding.",
           "syntax": [
             "byte",
@@ -9649,7 +9649,7 @@ window.SKYLINK_CODE = {
           "kind": "code",
           "what": "Construct Filename: <stored-name> followed by a newline.",
           "why": "A newline-terminated header frames metadata before raw payload in the simple TCP protocol.",
-          "example": "Filename: UUID_notes.txt\n.",
+          "example": "Filename: UUID_notes.txt\\n.",
           "caution": "There is no expected byte count/checksum/PIN in this header.",
           "syntax": [
             "String",
@@ -12471,7 +12471,7 @@ window.SKYLINK_CODE = {
     "<>": "Generic type parameters, or diamond inference for a constructor. Map keys/values use reference types.",
     "->": "Lambda arrow: arguments on the left, deferred task expression/body on the right.",
     "? :": "Conditional expression: condition ? resultIfTrue : resultIfFalse.",
-    "escapes": "Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation."
+    "escapes": "Inside strings, \\\" is a quote, \\\\ a backslash, \\r carriage return and \\n newline. These characters differ from their written escape notation."
   },
   "totals": {
     "files": 8,

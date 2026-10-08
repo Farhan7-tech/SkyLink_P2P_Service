@@ -77,7 +77,7 @@ const glossary = {
   '<>':'Generic type parameters, or diamond inference for a constructor. Map keys/values use reference types.',
   '->':'Lambda arrow: arguments on the left, deferred task expression/body on the right.',
   '? :':'Conditional expression: condition ? resultIfTrue : resultIfFalse.',
-  'escapes':'Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.'
+  'escapes':String.raw`Inside strings, \" is a quote, \\ a backslash, \r carriage return and \n newline. These characters differ from their written escape notation.`
 };
 const corrections = {
   'App.java':[[35,38,'System.exit normally runs already-registered hooks, but a startup failure before registration has no such hook. Forced termination can skip hooks.']],
@@ -133,7 +133,10 @@ for(const name of order){
     else if(!note)throw Error(`Missing authored code explanation ${name}:${line}: ${l.code}`);
     if(!note.what||!note.why)throw Error(`Incomplete ${name}:${line}`);
     const caveats=(corrections[name]||[]).filter(([a,b])=>line>=a&&line<=b).map(x=>x[2]);
-    return {line,raw:l.raw,code:l.code,kind,...note,caution:[note.caution||'',...caveats].filter(Boolean).join(' '),syntax:kind==='code'||kind==='brace'?syntaxFor(l.code):[]};
+    const prose=value=>value.replace(/\r/g,'\\r').replace(/\n/g,'\\n');
+    const rendered={...note};
+    for(const field of ['what','why','example'])if(rendered[field])rendered[field]=prose(rendered[field]);
+    return {line,raw:l.raw,code:l.code,kind,...rendered,caution:prose([note.caution||'',...caveats].filter(Boolean).join(' ')),syntax:kind==='code'||kind==='brace'?syntaxFor(l.code):[]};
   });
   data.push({...f,id:name.replace('.java','').toLowerCase(),hash:crypto.createHash('sha256').update(source).digest('hex'),rows,notes:undefined});
 }
