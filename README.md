@@ -131,6 +131,8 @@ src/main/java/P2P/
 
 ## Learn and Prepare for Interviews
 
+- **[Every Java line explained](docs/LINE_BY_LINE_GUIDE.md)** and **[interactive source reader](docs/code-walkthrough/index.html):** all eight production files, original line numbers, what/why/examples, Java syntax, and corrections to misleading comments.
+
 - **[Animated beginner lesson](docs/learning/index.html):** follow the bytes, pause each step, explore six transfer scenarios, track a two-day study plan and practice flashcards. Open the downloaded HTML locally; GitHub's file view shows its source.
 - **[Complete P2P guide and two-day plan](INTERVIEW_PREP.md):** every production/test module, the React integration, actual behavior, limitations and revision exercises.
 - **[80 questions with model answers](docs/QUESTION_BANK.md):** 20 beginner, 30 intermediate and 30 advanced.

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SkyLink P2P | Every Line Explained</title><link rel="stylesheet" href="reader.css"></head>
+<body>
+<header><a href="../learning/index.html">SkyLink P2P</a><span>CODE READING ROOM</span><a href="../LINE_BY_LINE_GUIDE.md">Complete written guide</a></header>
+<main>
+  <div class="heading"><div><p class="eyebrow">FROM THE ORIGINAL SOURCE</p><h1>Understand every line.</h1><p>What it does. Why it is here. How the Java syntax works.</p></div><div class="coverage"><strong id="total-lines">901</strong><span>lines / 8 files</span></div></div>
+  <details class="foundations" open><summary>Start here: classes, objects and the byte path</summary><div><p>A <strong>class</strong> defines a type. <strong>new</strong> constructs an object of that type. A <strong>variable</strong> holds a value or an object reference. A <strong>method</strong> performs an operation when called. A <strong>constructor</strong> initializes an object. <strong>Parameters</strong> are call inputs; a <strong>return value</strong> is an output.</p><p>The Java process owns the HTTP API, disk files, maps and TCP listeners. Your browser uploads to this server. The recipient downloads from this server. <code>localhost</code> inside DownloadHandler means this server host.</p><p class="byte-path">Browser &gt; UploadHandler &gt; temporary disk + PIN maps &gt; local TCP &gt; DownloadHandler &gt; HTTP &gt; recipient</p></div></details>
+  <div class="toolbar"><label>Java file<select id="file-select" aria-label="Select Java file"></select></label><label class="mode"><input id="code-only" type="checkbox"> Hide comments and spacing</label><label class="line-jump">Line<input id="line-jump" type="number" min="1" value="1" aria-label="Jump to source line"></label><span id="file-position"></span></div>
+  <div class="reader">
+    <aside><p class="eyebrow">READING ORDER</p><div id="file-tree"></div><a href="../INTERVIEW_PREP.md">Architecture and interview plan</a><a href="../HOW_TO_RUN.md">Local transfer exercise</a></aside>
+    <section class="source-panel"><div class="pane-title"><h2 id="source-name">App.java</h2><span id="source-count"></span></div><div id="source-lines" aria-label="Original Java source"></div></section>
+    <section class="explanation"><div class="selected-meta"><span id="selected-location"></span><span id="line-kind"></span></div><pre id="selected-code"></pre><div class="line-navigation"><button id="prev">Previous line</button><button id="next">Next line</button><label><input id="understood" type="checkbox"> I understand this line</label></div><div id="line-teaching" aria-live="polite"><h2>What This Line Does</h2><p id="what"></p><h2>Why It Is Here</h2><p id="why"></p><div id="example-section"><h2>Walk Through an Example</h2><p id="example"></p></div><div id="caution-section" class="caution"><h2>Actual Behavior</h2><p id="caution"></p></div><details id="syntax-section" open><summary>Read the syntax</summary><dl id="syntax"></dl></details></div></section>
+  </div>
+  <section class="file-context"><h2 id="context-title"></h2><p id="purpose"></p><p id="caller"></p><p id="analogy"></p><div id="checks"></div></section>
+  <details class="dictionary"><summary>Java syntax dictionary</summary><dl id="dictionary"></dl></details>
+  <footer><p>Source snapshot: 8 October 2026. Original Java files are unchanged. Proposed improvements and misleading comments are labeled at the relevant lines.</p><p id="progress"></p></footer>
+</main>
+<script src="snapshot.js"></script><script src="reader.js"></script>
+</body></html>
